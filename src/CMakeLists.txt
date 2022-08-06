@@ -5,6 +5,8 @@ set (project "skyLox")
 
 add_executable(${project}
     main.cxx
+    Scanner.cxx
+    Token.cxx
 )
 
 find_package(fmt CONFIG REQUIRED)

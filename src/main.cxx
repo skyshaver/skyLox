@@ -1,3 +1,4 @@
+#include "Scanner.h"
 #include "fmt/format.h"
 #include <fstream>
 #include <string>
@@ -29,6 +30,12 @@ void runPrompt()
             fmt::print("input: {}\n", line);
         }        
     }
+}
+
+void run(const std::string& source)
+{
+    Scanner scanner(source);
+
 }
 
 
