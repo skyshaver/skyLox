@@ -1,9 +1,12 @@
 #include "Scanner.h"
+#include "Token.h"
 #include "fmt/format.h"
 #include <fstream>
 #include <string>
 #include <vector>
 #include <iostream>
+
+static bool hadError = false;
 
 void runFile(const std::string& path)
 {
@@ -11,6 +14,9 @@ void runFile(const std::string& path)
     // can also use this iterator approach straight to a std::string
     std::vector<char> buffer( std::istreambuf_iterator<char>{fin},
                           std::istreambuf_iterator<char>() );
+
+    run(std::string(buffer.begin(), buffer.end()));
+    if(hadError) std::exit(1);
 }
 
 void runPrompt()
@@ -28,6 +34,8 @@ void runPrompt()
         else       
         {
             fmt::print("input: {}\n", line);
+            run(line);
+            hadError = false;
         }        
     }
 }
@@ -35,9 +43,23 @@ void runPrompt()
 void run(const std::string& source)
 {
     Scanner scanner(source);
-
+    std::vector<Token> tokens = scanner.scanTokens();
+    for(auto e : tokens)
+    {
+        fmt::print("{}", e);
+    }
 }
 
+void error(int line, const std::string& message)
+{
+    report(line, "", message);
+}
+
+void report(int line, const std::string& where, const std::string& message)
+{
+    fmt::print("[line: {}] Error:{}{}", line, where, message);
+    hadError = true;
+}
 
 int main(int argc, const char** argv)
 {
