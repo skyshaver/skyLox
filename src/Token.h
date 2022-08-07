@@ -2,10 +2,12 @@
 #include <string>
 #include <any>
 
+#pragma once
+
 class Token {
 public:
     Token();
-    Token(TokenType type, std::string lexeme, std::any literal, int line);
+    Token(TokenType type, std::string lexeme, std::any literal, size_t line);
 
     std::string toString();
 
@@ -13,7 +15,7 @@ public:
     const TokenType type;
     const std::string lexeme;
     std::any literal;
-    const int line;
+    const size_t line;
 
 
 };

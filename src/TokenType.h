@@ -1,3 +1,5 @@
+#pragma once
+
 enum class TokenType {
     // Single char tokens
     LEFT_PAREN,

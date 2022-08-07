@@ -1,5 +1,9 @@
+#include "TokenType.h"
 #include <string>
 #include <vector>
+#include <any>
+
+#pragma once
 
 class Token;
 
@@ -15,5 +19,10 @@ private:
     size_t current {};
     size_t line {1};
 
+    void scanToken();
+    void addToken(TokenType type);
+    void addToken(TokenType type, std::any literal);
+    char advance();
+    bool match(char expected);
     bool isAtEnd() { return current >= source.length(); }
 };

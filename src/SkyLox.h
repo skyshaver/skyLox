@@ -4,6 +4,8 @@
 #include <fstream>
 #include <vector>
 
+#pragma once
+
 class SkyLox {
     
 public:
