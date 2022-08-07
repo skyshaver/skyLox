@@ -1,11 +1,12 @@
 #include <string>
 #include <vector>
-#include <any>
+#include <variant>
 
 #pragma once
 
 class Token;
 enum class TokenType;
+using Literal = std::variant<std::string, double>;
 
 class Scanner {
 public:
@@ -21,8 +22,9 @@ private:
 
     void scanToken();
     void addToken(TokenType type);
-    void addToken(TokenType type, std::any literal);
+    void addToken(TokenType type, Literal literal);
     char advance();
+    char peek();
     bool match(char expected);
     bool isAtEnd() { return current >= source.length(); }
 };

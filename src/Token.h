@@ -2,20 +2,22 @@
 
 #include "TokenType.h"
 #include <string>
+#include <variant>
 #include <any>
 
+using Literal = std::variant<std::string, double>;
 
 class Token {
 public:
     Token();
-    Token(TokenType type, std::string lexeme, std::any literal, size_t line);
+    Token(TokenType type, std::string lexeme, Literal literal, size_t line);
 
     std::string toString();
 
 
     const TokenType type;
     const std::string lexeme;
-    std::any literal;
+    Literal literal;
     const size_t line;
 
 

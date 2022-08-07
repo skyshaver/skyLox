@@ -64,6 +64,26 @@ void Scanner::scanToken()
         case '>':
             addToken(match('=') ? TokenType::GREATER_EQUAL : TokenType::GREATER);
             break;
+        case '\\':
+            if(match('\\'))
+            {
+                while(peek() != '\n' && !isAtEnd())
+                {
+                    advance();
+                }
+            }
+            else
+            {
+                addToken(TokenType::SLASH);
+            }
+        // ignore whitespace
+        case ' ': 
+        case '\r':
+        case '\t':
+            break;
+        case '\n':
+            line++;
+            break;
         default:
             SkyLox::error(line, "Unexpected Character");
             break;
@@ -73,9 +93,9 @@ void Scanner::scanToken()
 
 void Scanner::addToken(TokenType type)
 {
-    addToken(type, nullptr);
+    addToken(type, "");
 }
-void Scanner::addToken(TokenType type, std::any literal)
+void Scanner::addToken(TokenType type, Literal literal)
 {
     std::string text = source.substr(start, current - start);
     tokens.push_back({type, text, literal, line});
@@ -93,4 +113,10 @@ bool Scanner::match(char expected)
 char Scanner::advance() 
 {
     return source.at(current++);
+}
+
+char Scanner::peek()
+{
+    if(isAtEnd()) return '\0';
+    return source.at(current);
 }
