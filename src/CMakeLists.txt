@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.5)
 project("skyLox")
 
 set (project_name "skyLox")
+set(include_directories("../include"))
+
 add_executable(${project_name}
     main.cxx
     SkyLox.cxx
