@@ -17,8 +17,8 @@ public:
     void runFile(const std::string& path);
     void runPrompt();
     void run(const std::string& source);
-    void error(int line, const std::string& message);
-    void report(int line, const std::string& where, const std::string& message);
+    static void error(int line, const std::string& message);
+    static void report(int line, const std::string& where, const std::string& message);
     inline static bool hadError = false;
 
     SkyLox(const SkyLox&) = delete;
