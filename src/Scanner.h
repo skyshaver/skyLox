@@ -1,4 +1,3 @@
-#include "TokenType.h"
 #include <string>
 #include <vector>
 #include <any>
@@ -6,6 +5,7 @@
 #pragma once
 
 class Token;
+enum class TokenType;
 
 class Scanner {
 public:

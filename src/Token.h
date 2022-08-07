@@ -1,8 +1,9 @@
+#pragma once
+
 #include "TokenType.h"
 #include <string>
 #include <any>
 
-#pragma once
 
 class Token {
 public:
