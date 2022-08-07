@@ -38,10 +38,10 @@ void SkyLox::run(const std::string& source)
 {
     Scanner scanner(source);
     std::vector<Token> tokens = scanner.scanTokens();
-    // for(auto e : tokens)
-    // {
-    //     // fmt::print("{}", e);
-    // }
+    for(auto e : tokens)
+    {
+        fmt::print("{}", e.toString());
+    }
 }
 
 void SkyLox::error(int line, const std::string& message)

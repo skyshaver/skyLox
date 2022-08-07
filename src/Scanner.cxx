@@ -1,13 +1,17 @@
 #include "Scanner.h"
 #include "Token.h"
 
-Scanner::Scanner(const std::string& source)
+Scanner::Scanner(const std::string& source) : source(source)
 {
     
 }
 
 std::vector<Token> Scanner::scanTokens()
-{
-    std::vector<Token> tokens;
+{    
+    while(!isAtEnd())
+    {
+
+    }
+    tokens.push_back({TokenType::TT_EOF, "", nullptr, line});
     return tokens;
 }
