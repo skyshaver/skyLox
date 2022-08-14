@@ -5,7 +5,7 @@
 #include <variant>
 #include <any>
 
-using Literal = std::variant<std::string, double>;
+using Literal = std::variant<std::monostate, std::string, double>;
 
 class Token {
 public:

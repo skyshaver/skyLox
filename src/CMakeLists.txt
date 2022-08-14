@@ -14,6 +14,8 @@ add_executable(${project_name}
 
 find_package(fmt CONFIG REQUIRED)
 
+target_include_directories(${project_name} PRIVATE ${include_directories})
+
 target_link_libraries(${project_name} PRIVATE 
     fmt::fmt     
 )

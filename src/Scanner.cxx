@@ -84,8 +84,22 @@ void Scanner::scanToken()
         case '\n':
             line++;
             break;
+        case '"':
+            string();
+            break;
         default:
-            SkyLox::error(line, "Unexpected Character");
+            if(std::isdigit(c))
+            {
+                number();
+            }
+            else if (std::isalpha(c) or c == '_')
+            {
+                identifier();
+            }            
+            else
+            {
+                SkyLox::error(line, "Unexpected Character");
+            }
             break;
     }
 
@@ -93,7 +107,7 @@ void Scanner::scanToken()
 
 void Scanner::addToken(TokenType type)
 {
-    addToken(type, "");
+    addToken(type, Literal{});
 }
 void Scanner::addToken(TokenType type, Literal literal)
 {
@@ -119,4 +133,54 @@ char Scanner::peek()
 {
     if(isAtEnd()) return '\0';
     return source.at(current);
+}
+
+char Scanner::peekNext()
+{
+    if(current + 1 >= source.length()) return '\0';
+    return source.at(current + 1);
+}
+
+void Scanner::number()
+{
+    while(std::isdigit(peek())) advance();
+
+    if(peek() == '.' and std::isdigit(peekNext())){
+        advance();
+        while(std::isdigit(peek())) advance();
+    }
+
+    addToken(TokenType::NUMBER, std::stod(source.substr(start, current - start)));
+}
+
+void Scanner::string()
+{
+    while(peek() != '"' and !isAtEnd()) 
+    {
+        if(peek() == '\n') line++;
+        advance();
+    }
+
+    if(isAtEnd())
+    {
+        SkyLox::error(line, "Unterminated String");
+        return;
+    }
+    // closing "
+    advance();
+    // Trim the surround quotes
+    std::string value = source.substr(start + 1, (current - 1) - start);
+    addToken(TokenType::STRING, value);
+}
+
+void Scanner::identifier()
+{
+    while(std::isalnum(peek())) advance();
+    std::string text = source.substr(start, current - start);
+    auto it = keywordsMap.find(text);
+    if(it == keywordsMap.end()) 
+        addToken(TokenType::IDENTIFIER);
+    else
+        addToken(it->second); 
+
 }
